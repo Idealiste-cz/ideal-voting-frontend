@@ -15,7 +15,14 @@
                 <label for="ballotAdminEmail">Váš email</label>
             </div>
             <div>
-                <input type="email" v-model="ballotAdminEmail" id="ballotAdminEmail" class="border rounded" required>
+                <input 
+                    type="email"
+                    v-model="ballotAdminEmail"
+                    @input="checkEmailValidity"
+                    id="ballotAdminEmail"
+                    class="border rounded"
+                    :class="{ 'border-red-700' : invalidEmail }"
+                    required>
             </div>
         </div>
 
@@ -24,7 +31,13 @@
                 <label for="ballotOptionInput">Možnosti volby</label>
             </div>
             <div>
-                <input type="text" v-model="ballotOptionInput" id="ballotOptionInput" class="border rounded" @keyup.enter="pushToOptions">
+                <input 
+                    type="text"
+                    v-model="ballotOptionInput"
+                    id="ballotOptionInput"
+                    class="border rounded"
+                    @keyup.enter="pushToOptions"
+                >
             </div>
             <div v-if="Object.keys(ballotOptions).length > 0" class="mt-4">
                 <span v-for="bo in ballotOptions" :key="bo.id" class="p-2 mr-2 border rounded">
@@ -50,6 +63,8 @@
 </template>
 
 <script>
+import { regexEmail } from '@/helpers/regex';
+
 export default {
     name: 'NewBallot',
     emits: ['processUserInput'],
@@ -60,27 +75,38 @@ export default {
           ballotOptionInput: null,
           ballotOptions: {},
           ballotVotersInput: null,
+          invalidEmail: true
       }
     },
     methods: {
+        checkEmailValidity() {
+            if (regexEmail(this.ballotAdminEmail) === false) {
+                this.invalidEmail = true;
+            } else {
+                this.invalidEmail = false;
+            }
+
+            return this.invalidEmail;
+        },
         pushToOptions() {
             let index = Math.random();
             this.ballotOptions[index] = { id: index, value: this.ballotOptionInput };
             return this.ballotOptionInput = null;
-          },
-          removeFromOptions(item) {
+        },
+        removeFromOptions(item) {
             return delete this.ballotOptions[item];
-          },
-          processUserInput() {
-              let userData = {
-                  ballotName: this.ballotName,
-                  ballotAdminEmail: this.ballotAdminEmail,
-                  ballotOptions: this.ballotOptions,
-                  ballotVotersInput: this.ballotVotersInput
-              };
+        },
+        processUserInput() {
+            let userData = {
+                ballotName: this.ballotName,
+                ballotAdminEmail: this.ballotAdminEmail,
+                ballotOptions: this.ballotOptions,
+                ballotVotersInput: this.ballotVotersInput
+            };
 
-              this.$emit("processUserInput", userData);
-          }
+            this.$emit("processUserInput", userData);
+        },
+          
     },
 }
 </script>

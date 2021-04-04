@@ -9,7 +9,7 @@
         </div>
         
         <div v-else>
-            {{ userData }}
+            <NewBallotValidation :data="userData"/>
         </div>
 
     </div>
@@ -17,12 +17,14 @@
 
 <script>
 import NewBallot from './partials/NewBallot';
+import NewBallotValidation from './partials/NewBallotValidation';
 import { parseEmails } from '../helpers/parseEmails';
 
 export default {
   name: 'Home',
   components: {
-      NewBallot
+      NewBallot,
+      NewBallotValidation
   },
   data() {
       return {
