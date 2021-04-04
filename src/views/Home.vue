@@ -28,9 +28,6 @@ export default {
           userData: null
       }
   },
-  computed: {
-      ...mapState(['ballot']),
-  },
   methods: {
       processData(data) {
           this.userData = data;
