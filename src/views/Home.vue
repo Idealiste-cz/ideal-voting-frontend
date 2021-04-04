@@ -1,0 +1,40 @@
+<template>
+    <div class="container mx-auto max-w-screen-md">
+        <div id="home-header">
+            <h1 class="text-4xl text-center font-bold mt-12">Hlasuj tajně</h1>
+        </div>
+
+        <div v-if="userData === null">
+            <NewBallot @processUserInput="processData"/>
+        </div>
+        
+        <div v-else>
+            {{ userData }}
+        </div>
+
+    </div>
+</template>
+
+<script>
+import NewBallot from './partials/NewBallot';
+
+export default {
+  name: 'Home',
+  components: {
+      NewBallot
+  },
+  data() {
+      return {
+          userData: null
+      }
+  },
+  computed: {
+      ...mapState(['ballot']),
+  },
+  methods: {
+      processData(data) {
+          this.userData = data;
+      }
+  }
+}
+</script>

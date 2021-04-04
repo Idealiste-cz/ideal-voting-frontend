@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <p class="text-red-500">
-      tailwind configured
-    </p>
+  <div class="flex items-center">
+    <router-view></router-view>
   </div>
 </template>
 
