@@ -17,6 +17,7 @@
 
 <script>
 import NewBallot from './partials/NewBallot';
+import { parseEmails } from '../helpers/parseEmails';
 
 export default {
   name: 'Home',
@@ -29,8 +30,9 @@ export default {
       }
   },
   methods: {
-      processData(data) {
-          this.userData = data;
+      async processData(data) {
+          data.ballotVoters = await parseEmails(data.ballotVotersInput);
+          return this.userData = data;
       }
   }
 }

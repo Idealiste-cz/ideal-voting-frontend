@@ -38,7 +38,7 @@
                 <label for="ballotVoters">Emaily hlasujících (vč. vás)</label>
             </div>
             <div>
-                <textarea v-model="ballotVoters" id="ballotVoters" cols="30" rows="10" class="border rounded"></textarea>
+                <textarea v-model="ballotVotersInput" id="ballotVotersInput" cols="30" rows="10" class="border rounded"></textarea>
             </div>
         </div>
 
@@ -59,7 +59,7 @@ export default {
           ballotAdminEmail: null,
           ballotOptionInput: null,
           ballotOptions: {},
-          ballotVoters: null,
+          ballotVotersInput: null,
       }
     },
     methods: {
@@ -76,7 +76,7 @@ export default {
                   ballotName: this.ballotName,
                   ballotAdminEmail: this.ballotAdminEmail,
                   ballotOptions: this.ballotOptions,
-                  ballotVoters: this.ballotVoters
+                  ballotVotersInput: this.ballotVotersInput
               };
 
               this.$emit("processUserInput", userData);
