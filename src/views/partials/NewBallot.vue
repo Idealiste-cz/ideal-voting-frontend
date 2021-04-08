@@ -6,7 +6,7 @@
                 <label for="ballotName">Název hlasování</label>
             </div>
             <div>
-                <input type="text" v-model="ballotName" id="ballotName" class="border rounded" required>
+                <input type="text" v-model="ballotName" id="ballotName" class="border-2 rounded" required>
             </div>
         </div>
 
@@ -20,7 +20,7 @@
                     v-model="ballotAdminEmail"
                     @input="checkEmailValidity"
                     id="ballotAdminEmail"
-                    class="border rounded"
+                    class="border-2 rounded"
                     :class="{ 'border-red-700' : invalidEmail }"
                     required>
             </div>
@@ -35,7 +35,7 @@
                     type="text"
                     v-model="ballotOptionInput"
                     id="ballotOptionInput"
-                    class="border rounded"
+                    class="border-2 rounded"
                     @keyup.enter="pushToOptions"
                 >
             </div>
@@ -51,11 +51,11 @@
                 <label for="ballotVoters">Emaily hlasujících (vč. vás)</label>
             </div>
             <div>
-                <textarea v-model="ballotVotersInput" id="ballotVotersInput" cols="30" rows="10" class="border rounded"></textarea>
+                <textarea v-model="ballotVotersInput" id="ballotVotersInput" cols="30" rows="10" class="border-2 rounded"></textarea>
             </div>
         </div>
 
-        <button @click="processUserInput" class="border p-4 mt-4 rounded hover:bg-gray-300">
+        <button @click="processUserInput" class="border-2 p-4 mt-4 rounded hover:bg-gray-300">
             Dále
         </button>
         </form>
@@ -75,7 +75,7 @@ export default {
           ballotOptionInput: null,
           ballotOptions: {},
           ballotVotersInput: null,
-          invalidEmail: true
+          invalidEmail: false
       }
     },
     methods: {
