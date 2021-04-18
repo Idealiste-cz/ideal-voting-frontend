@@ -4,11 +4,11 @@
             <h1 class="text-4xl text-center font-bold mt-12">Hlasuj tajně</h1>
         </div>
 
-        <div v-if="userData === null">
+        <div>
             <NewBallot @processUserInput="processData"/>
         </div>
         
-        <div v-else>
+        <div v-if="showModal !== false">
             <NewBallotValidation :data="userData"/>
         </div>
 
@@ -28,13 +28,14 @@ export default {
   },
   data() {
       return {
-          userData: null
+          showModal: false,
+          userData: null,
       }
   },
   methods: {
       async processData(data) {
           data.ballotVoters = await parseEmails(data.ballotVotersInput);
-          return this.userData = data;
+          return this.showModal = true, this.userData = data;
       }
   }
 }
