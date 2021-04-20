@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { regexEmail } from '@/helpers/regex';
+import { regexPlainEmail } from '@/helpers/regex';
 
 export default {
     name: 'NewBallot',
@@ -80,7 +80,7 @@ export default {
     },
     methods: {
         checkEmailValidity() {
-            if (regexEmail(this.ballotAdminEmail) === false) {
+            if (regexPlainEmail(this.ballotAdminEmail) === false) {
                 this.invalidEmail = true;
             } else {
                 this.invalidEmail = false;

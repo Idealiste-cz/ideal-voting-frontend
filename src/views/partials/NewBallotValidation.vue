@@ -19,7 +19,7 @@
 				<!--Body-->
 				<div class="my-5">
     <div>
-                            Název hlasování: <input type="text" v-model="ballotName" class="bg-transparent"><br>
+                            Název hlasování: {{ ballotName }}<br>
                             Váš email: <input type="text" v-model="ballotAdminEmail" class="bg-transparent"><br>
                             <br>
                             <h3>Kontrola emailů hlasujících:</h3>
