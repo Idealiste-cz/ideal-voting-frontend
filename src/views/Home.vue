@@ -18,7 +18,7 @@
 <script>
 import NewBallot from './partials/NewBallot';
 import NewBallotValidation from './partials/NewBallotValidation';
-import { parseEmails } from '../helpers/parseEmails';
+import { parseEmails } from '../helpers/emails';
 
 export default {
   name: 'Home',

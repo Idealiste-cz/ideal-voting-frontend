@@ -18,13 +18,13 @@
 				</div>
 				<!--Body-->
 				<div class="my-5">
-    <div>
+                <div>
                             Název hlasování: {{ ballotName }}<br>
                             Váš email: <input type="text" v-model="ballotAdminEmail" class="bg-transparent"><br>
                             <br>
                             <h3>Kontrola emailů hlasujících:</h3>
-                            <span v-for="voter in ballotVoters" :key="voter">
-                                <input type="text" :value="voter" class="bg-transparent voter-input"><br>
+                            <span v-for="voter in ballotVoters" :key="voter.email">
+                                <input type="text" :value="voter.email" class="bg-transparent voter-input"> {{ voter.status }} {{ voter.name }}<br>
                             </span>
                         </div>
 				</div>
@@ -55,7 +55,7 @@ export default {
     methods: {
         closeModal() {
             return this.$parent.$data.showModal = false;
-        }
+        },
     }
 }
 </script>
