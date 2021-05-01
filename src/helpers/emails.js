@@ -8,11 +8,11 @@ export function parseEmails(data) {
     for (let i = 0; i < splitData.length; i++) {
         if (regexNamedEmail(splitData[i])) {
             let preparedData = prepareNamedEmail(splitData[i]);
-            parsedData.push({ status: 1, email: preparedData.email, name: preparedData.name });
+            parsedData.push({ id: i, status: true, email: preparedData.email, name: preparedData.name });
         } else if (regexPlainEmail(splitData[i])) {
-            parsedData.push({ status: 1, email: splitData[i], name: null});
+            parsedData.push({ id: i, status: true, email: splitData[i], name: null});
         } else {
-            parsedData.push({ status: 0, email: splitData[i], name: null});
+            parsedData.push({ id: i, status: false, email: splitData[i], name: null});
         }
     }
 

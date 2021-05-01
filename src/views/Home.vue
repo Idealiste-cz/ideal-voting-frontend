@@ -1,5 +1,5 @@
 <template>
-    <div class="container mx-auto max-w-screen-md">
+    <div class="container mx-auto max-w-screen-md" @keydown.esc="showModal = false">
         <div id="home-header">
             <h1 class="text-4xl text-center font-bold mt-12">Hlasuj tajně</h1>
         </div>
