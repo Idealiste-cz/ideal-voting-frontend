@@ -80,11 +80,9 @@ export default {
     },
     methods: {
         checkEmailValidity() {
-            (regexPlainEmail(this.ballotAdminEmail) === false)
-                ? this.invalidEmail = true
-                : this.invalidEmail = false;
-
-            return this.invalidEmail;
+            this.invalidEmail = (regexPlainEmail(this.ballotAdminEmail) === false)
+                ? true
+                : false;
         },
         pushToOptions() {
             let index = Math.random();
