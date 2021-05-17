@@ -40,8 +40,8 @@
                 >
             </div>
             <div v-if="Object.keys(ballotOptions).length > 0" class="mt-4">
-                <span v-for="bo in ballotOptions" :key="bo.id" class="p-2 mr-2 border rounded">
-                    {{ bo.value }} | <button @click="removeFromOptions(bo.id)">x</button>
+                <span v-for="bo in Object.entries(ballotOptions)" :key="bo[0]" class="p-2 mr-2 border rounded">
+                    {{ bo[1] }} | <button @click="removeFromOptions(bo[0])">x</button>
                 </span>
             </div>
         </div>
@@ -73,24 +73,22 @@ export default {
           ballotName: null,
           ballotAdminEmail: null,
           ballotOptionInput: null,
-          ballotOptions: {},
+          ballotOptions: [],
           ballotVotersInput: null,
           invalidEmail: false
       }
     },
     methods: {
         checkEmailValidity() {
-            if (regexPlainEmail(this.ballotAdminEmail) === false) {
-                this.invalidEmail = true;
-            } else {
-                this.invalidEmail = false;
-            }
+            (regexPlainEmail(this.ballotAdminEmail) === false)
+                ? this.invalidEmail = true
+                : this.invalidEmail = false;
 
             return this.invalidEmail;
         },
         pushToOptions() {
             let index = Math.random();
-            this.ballotOptions[index] = { id: index, value: this.ballotOptionInput };
+            this.ballotOptions[index] = this.ballotOptionInput;
             return this.ballotOptionInput = null;
         },
         removeFromOptions(item) {

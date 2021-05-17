@@ -24,11 +24,11 @@
 				<!--Body-->
 				<div class="my-5">
                 <div class="scroll">
-                            Název hlasování: {{ ballotName }}<br>
-                            Váš email: <input type="text" v-model="ballotAdminEmail" class="bg-transparent"><br>
+                            Název hlasování: {{ data.ballotName }}<br>
+                            Váš email: {{ data.ballotAdminEmail }}<br>
                             <br>
                             <h3>Kontrola emailů hlasujících:</h3>
-                            <span v-for="voter in ballotVoters" :key="voter.email">
+                            <span v-for="voter in data.ballotVoters" :key="voter.email">
                                 <input 
 									type="text"
 									:value="voter.email"
@@ -44,7 +44,7 @@
 					<button
 						class="focus:outline-none modal-close px-4 bg-gray-400 p-3 rounded-lg text-black hover:bg-gray-300" @click="closeModal">Zpět</button>
 					<button
-						class="focus:outline-none px-4 bg-teal-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400">Potvrdit</button>
+						class="focus:outline-none px-4 bg-purple-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400" @click="setData">Potvrdit</button>
 				</div>
 			</div>
 		</div>
@@ -55,18 +55,36 @@
 export default {
     name: "NewBallotValidation",
     props: ['data'],
-    data() {
-        return {
-            ballotAdminEmail: this.data.ballotAdminEmail,
-            ballotName: this.data.ballotName,
-            ballotOptions: this.data.ballotOptions,
-            ballotVoters: this.data.ballotVoters,
-        }
-    },
     methods: {
         closeModal() {
             return this.$parent.$data.showModal = false;
         },
+		processVoters() {
+			let voters = [];
+			document.querySelectorAll("[data-voters]").forEach(item => {
+				voters.push(item.value);
+			});
+
+			return voters;
+		},
+		processOptions() {
+			let options = [];
+            Object.entries(this.data.ballotOptions).forEach(item => {
+                options.push(item[1]);
+            });
+
+			return options;
+		},
+		setData() {
+			let payload = {
+				email: this.data.ballotAdminEmail,
+				name: this.data.ballotName,
+				options: this.processOptions(),
+				voters: this.processVoters()
+			};
+
+			console.log(payload);
+		}
     }
 }
 </script>
