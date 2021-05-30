@@ -52,9 +52,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
     name: "NewBallotValidation",
     props: ['data'],
+	computed: {
+		...mapState(['ballot']),
+	},
     methods: {
         closeModal() {
             return this.$parent.$data.showModal = false;
@@ -75,15 +80,17 @@ export default {
 
 			return options;
 		},
-		setData() {
-			let payload = {
+		async setData() {
+			let data = {
 				email: this.data.ballotAdminEmail,
 				name: this.data.ballotName,
 				options: this.processOptions(),
 				voters: this.processVoters()
 			};
 
-			console.log(payload);
+			await this.$store.dispatch('ballot/new', data);
+			const id = this.$store.state.ballot.item.id;
+			this.$router.push({ name: 'Ballot', params: { id }});
 		}
     }
 }

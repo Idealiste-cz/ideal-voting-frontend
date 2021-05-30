@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import Home from '@/views/Home.vue';
+import Ballot from '@/views/Ballot.vue';
 
 const routes = [
     {
@@ -7,6 +8,11 @@ const routes = [
         name: "Home",
         component: Home,
     },
+    {
+        path: '/ballot/:id',
+        name: "Ballot",
+        component: Ballot
+    }
 ];
 
 const router = createRouter({
