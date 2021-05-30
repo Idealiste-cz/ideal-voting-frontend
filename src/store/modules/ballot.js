@@ -33,5 +33,10 @@ export default {
                     console.log(err);
                 });
         }
+    },
+    getters: {
+        fetchState(state) {
+            return state.item;
+        }
     }
 };
