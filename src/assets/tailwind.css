@@ -1,5 +1,34 @@
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('fonts/Rubik-Regular.ttf');
+}
+  
+@font-face {
+    font-family: 'Rubik Bold';
+    src: url('fonts/Rubik-Bold.ttf');
+}
+
+:root {
+    --main-bg: #F6F8FC;
+}
+
+html {
+    font-family: 'Rubik', sans-serif;
+}
+
+body {
+    background-color: var(--main-bg);
+}
+
+.scroll {
+    width: 100%;
+    height: 40vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: center;
+    padding: 10px;
+}  
