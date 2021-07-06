@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --main-bg: #F6F8FC;
+    --light-green: #75DDC3;
+    --dark-green: #42C3A2;
+    --light-red: #FF7777;
+    --dark-red: #FE5A5A;
+    --light-purple: #EB96FC;
+    --dark-purple: #C04FD7;
+    --text-gray: #404c53;
+}
+
 @font-face {
     font-family: 'Rubik';
     src: url('fonts/Rubik-Regular.ttf');
@@ -12,16 +23,21 @@
     src: url('fonts/Rubik-Bold.ttf');
 }
 
-:root {
-    --main-bg: #F6F8FC;
-}
-
 html {
     font-family: 'Rubik', sans-serif;
 }
 
 body {
     background-color: var(--main-bg);
+}
+
+h1 {
+    font-family: 'Rubik Bold', sans-serif;
+    text-transform: uppercase;
+}
+
+p, label, h3 {
+    color: var(--text-gray);
 }
 
 .scroll {
@@ -31,4 +47,25 @@ body {
     overflow-y: auto;
     text-align: center;
     padding: 10px;
-}  
+}
+
+.red-gradient {
+    background: linear-gradient(to right, var(--dark-red), var(--light-red));
+}
+
+.purple-gradient {
+    background: linear-gradient(to right, var(--dark-purple), var(--light-purple));
+}
+
+.green-gradient {
+    background: linear-gradient(to right, var(--dark-green), var(--light-green));
+}
+
+#submit-form {
+    background: linear-gradient(to right, var(--dark-purple), var(--light-purple));
+    color: white;
+}
+
+#submit-form:hover {
+    background: linear-gradient(to right, var(--dark-green), var(--light-green));
+}

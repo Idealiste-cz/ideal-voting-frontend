@@ -13,7 +13,7 @@
 				<div class="flex justify-between items-center pb-3">
 					<p class="text-2xl font-bold">Shrnutí</p>
 					<div class="modal-close cursor-pointer z-50" @click="closeModal">
-						<svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+						<svg class="fill-current text-black hover:text-red-600" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
 							viewBox="0 0 18 18">
 							<path
 								d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
@@ -34,17 +34,21 @@
 									:value="voter.email"
 									:data-voters="voter.id"
 									:class="{ 'border-red-700' : !voter.status }"
-									class="bg-transparent voter-input border"
+									class="bg-transparent voter-input border rounded"
+									@input="validateVoterEmailOnFly(voter.id)"
 								> {{ voter.name }}<br>
                             </span>
                         </div>
 				</div>
 				<!--Footer-->
-				<div class="flex justify-end pt-2">
+				<div class="flex justify-center pt-2">
 					<button
-						class="focus:outline-none modal-close px-4 bg-gray-400 p-3 rounded-lg text-black hover:bg-gray-300" @click="closeModal">Zpět</button>
-					<button
-						class="focus:outline-none px-4 bg-purple-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400" @click="setData">Potvrdit</button>
+						id="submit-form"
+						class="focus:outline-none p-4 m-2 rounded font-bold shadow-lg"
+						@click="setData"
+					>
+						Potvrdit
+					</button>
 				</div>
 			</div>
 		</div>
@@ -52,7 +56,9 @@
 </template>
 
 <script>
+import gsap from 'gsap';
 import { mapState } from 'vuex';
+import { regexPlainEmail } from '@/helpers/regex';
 
 export default {
     name: "NewBallotValidation",
@@ -80,6 +86,14 @@ export default {
 
 			return options;
 		},
+		validateVoterEmailOnFly(id) {
+			let inputData = document.querySelector("[data-voters='"+id+"']");
+			
+			if (regexPlainEmail(inputData.value)) {
+				inputData.classList.remove('border-red-700');
+				gsap.to("[data-voters='"+id+"']", {x: 0, duration: 1.00, ease: 'elastic'});
+			}
+		},
 		async setData() {
 			let data = {
 				email: this.data.ballotAdminEmail,
@@ -92,7 +106,11 @@ export default {
 			const id = this.$store.state.ballot.item.id;
 			this.$router.push({ name: 'Ballot', params: { id }});
 		}
-    }
+    },
+	mounted() {
+		let tween = gsap.to(".border-red-700", {x: 10, duration: 1.00, ease: 'elastic'});
+		tween.play();
+	}
 }
 </script>
 

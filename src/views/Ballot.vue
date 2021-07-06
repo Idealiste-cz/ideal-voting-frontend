@@ -16,7 +16,7 @@ export default {
     return {
       currentBallot: this.$store.getters['ballot/fetchState']
     }
-  }
+  },
 }
 </script>
 
