@@ -4,7 +4,7 @@
 		style="background: rgba(0,0,0,.7);"
 	>
 		<div
-			class="border border-teal-500 shadow-lg modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto"
+			class="border border-teal-500 shadow-lg modal-container bg-white w-11/12 md:max-w-xl mx-auto rounded shadow-lg z-50 overflow-y-auto"
 			
 		>
 			<div class="modal-content py-4 text-left px-6">
@@ -23,34 +23,55 @@
 				</div>
 				<!--Body-->
 				<div class="my-5">
-                <div class="scroll">
-                            Název hlasování: {{ data.ballotName }}<br>
-                            Váš email: {{ data.ballotAdminEmail }}<br>
-                            <br>
-                            <h3>Kontrola emailů hlasujících:</h3>
-                            <span v-for="voter in data.ballotVoters" :key="voter.email">
-                                <input 
+
+					<div class="scroll">
+						<div class="grid grid-cols-2">
+							<div class="text-left italic">Název hlasování:</div>
+							<div class="text-right font-bold break-words">{{ data.ballotName }}</div>
+						</div>
+						<div class="grid grid-cols-2 mb-2">
+							<div class="text-left italic">Váš email:</div>
+							<div class="text-right font-bold break-words">{{ data.ballotAdminEmail }}</div>
+						</div>
+						<div class="grid grid-cols-2 mb-4">
+							<div class="text-left italic">Možnosti:</div>
+							<div class="text-right">
+								<span v-for="option in Object.entries(data.ballotOptions)" :key="option[0]" class="font-bold">
+									{{ option[1] }}<br>
+								</span>
+							</div>
+						</div>
+						<hr class="mb-4">
+						<div class="grid grid-cols-2 mb-4">
+							<div class="text-left italic">Hlasující:</div>
+							<div class="text-right"></div>
+						</div>
+						<div v-for="voter in data.ballotVoters" :key="voter.email" class="mb-4 text-left">
+							<div :id="voter.id">
+								<button @click.prevent="removeVoter(voter.id)" class="text-red-400 hover:text-red-600">×</button>
+								<input 
 									type="text"
 									:value="voter.email"
 									:data-voters="voter.id"
 									:class="{ 'border-red-700' : !voter.status }"
-									class="bg-transparent voter-input border rounded"
+									class="focus:outline-none bg-transparent voter-input border rounded ml-2 p-1 pl-2"
 									@input="validateVoterEmailOnFly(voter.id)"
-								> {{ voter.name }}<br>
-                            </span>
-                        </div>
+								>
+							</div>
+						</div>
+					</div>
+					<!--Footer-->
+					<div class="flex justify-center pt-2">
+						<button
+							id="submit-form"
+							class="focus:outline-none p-4 m-2 rounded font-bold shadow-lg"
+							@click="setData"
+						>
+							Potvrdit
+						</button>
+					</div>
 				</div>
-				<!--Footer-->
-				<div class="flex justify-center pt-2">
-					<button
-						id="submit-form"
-						class="focus:outline-none p-4 m-2 rounded font-bold shadow-lg"
-						@click="setData"
-					>
-						Potvrdit
-					</button>
-				</div>
-			</div>
+			</div>	
 		</div>
 	</div>
 </template>
@@ -88,11 +109,19 @@ export default {
 		},
 		validateVoterEmailOnFly(id) {
 			let inputData = document.querySelector("[data-voters='"+id+"']");
-			
+
 			if (regexPlainEmail(inputData.value)) {
 				inputData.classList.remove('border-red-700');
 				gsap.to("[data-voters='"+id+"']", {x: 0, duration: 1.00, ease: 'elastic'});
+			} else {
+				inputData.classList.add('border-red-700');
+				gsap.to("[data-voters='"+id+"']", {x: 10, duration: 1.00, ease: 'elastic'});
 			}
+		},
+		async removeVoter(id) {
+			const el = document.getElementById(id);
+			await gsap.to(el, {opacity: 0, duration: 0.5});
+			el.remove();
 		},
 		async setData() {
 			let data = {

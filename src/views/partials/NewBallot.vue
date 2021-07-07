@@ -10,7 +10,7 @@
                     type="text"
                     v-model="ballotName"
                     id="ballotName"
-                    class="border border-gray-400 rounded bg-transparent w-3/4" required>
+                    class="focus:outline-none border border-gray-400 rounded bg-transparent w-3/4" required>
             </div>
         </div>
         <div class="text-lg text-center mb-6" id="form-email">
@@ -19,13 +19,14 @@
             </div>
             <div>
                 <input 
+                    id="ballotAdminEmail"
                     type="email"
                     v-model="ballotAdminEmail"
                     @input="checkEmailValidity"
-                    id="ballotAdminEmail"
-                    class="border border-gray-400 rounded bg-transparent w-3/4"
+                    class="focus:outline-none border border-gray-400 rounded bg-transparent w-3/4"
                     :class="{ 'border-red-700' : invalidEmail }"
-                    required>
+                    required
+                >
             </div>
         </div>
 
@@ -38,7 +39,7 @@
                         type="text"
                         v-model="ballotOptionInput"
                         id="ballotOptionInput"
-                        class="-ml-4 border rounded border-gray-400 rounded bg-transparent w-3/4"
+                        class="focus:outline-none -ml-4 border rounded border-gray-400 rounded bg-transparent w-3/4"
                         @keyup.enter="pushToOptions"
                     >
                     <button @click.prevent="pushToOptions" class="-ml-20 text-gray-500 hover:text-green-600">Přidat</button> ⤶
@@ -47,7 +48,7 @@
                 <button 
                     v-for="bo in Object.entries(ballotOptions)" 
                     :key="bo[0]" 
-                    class="green-gradient p-2 m-1 rounded shadow-sm"
+                    class="focus:outline-none green-gradient p-2 m-1 rounded shadow-sm"
                     @click.prevent
                 >
                     <span class="font-bold pointer-events-none">{{ bo[1] }}</span>
@@ -65,7 +66,7 @@
                     v-model="ballotVotersInput"
                     id="ballotVotersInput"
                     rows="10"
-                    class="border rounded border-gray-400 rounded bg-transparent w-3/4"
+                    class="focus:outline-none border rounded border-gray-400 rounded bg-transparent w-3/4"
                 ></textarea>
                 <p class="text-sm italic pl-12 pr-12">
                     *Nezapomeňte zadat i svůj, pokud patříte mezi hlasující.
