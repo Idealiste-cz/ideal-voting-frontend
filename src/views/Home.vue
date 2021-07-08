@@ -1,10 +1,6 @@
 <template>
     <div class="container mx-auto max-w-screen-md" @keydown.esc="showModal = false">
-        <div id="home-header" class="purple-gradient md:mt-12 mb-12 pt-12 pb-24 md:rounded shadow-xl">
-            <h1 class="text-4xl text-center mt-12 text-white" id="main-header">Tajná volba</h1>
-            <h4 class="text-white text-center" id="main-subheader">Bezpečné hlasování teď hned!</h4>
-        </div>
-
+        <Header :title="title" />
         <div>
             <NewBallot @processUserInput="processData"/>
         </div>
@@ -18,9 +14,10 @@
 </template>
 
 <script>
-import NewBallot from './partials/NewBallot';
-import NewBallotValidation from './partials/NewBallotValidation';
+import NewBallot from './partials/Home/NewBallot';
+import NewBallotValidation from './partials/Home/NewBallotValidation';
 import Footer from './partials/Footer.vue';
+import Header from './partials/Header.vue';
 import { parseEmails } from '../helpers/emails';
 
 export default {
@@ -28,12 +25,14 @@ export default {
   components: {
       NewBallot,
       NewBallotValidation,
-      Footer
+      Footer,
+      Header
   },
   data() {
       return {
           showModal: false,
           userData: null,
+          title: 'Založte bezpečné hlasování teď hned!'
       }
   },
   methods: {

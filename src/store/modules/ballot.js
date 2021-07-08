@@ -32,10 +32,20 @@ export default {
                 .catch(err => {
                     console.log(err);
                 });
+        },
+        fetch({ commit }, id) {
+            return axios
+                .get(`${url}/ballots/${id}`)
+                .then(response => {
+                    commit('SET_STATE_ITEM', response.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     },
     getters: {
-        fetchState(state) {
+        fetchItem(state) {
             return state.item;
         }
     }
