@@ -1,6 +1,5 @@
 <template>
-  <div class="container mx-auto max-w-screen-md">
-    
+  <div>
     <div v-if="!loading">
       <Header :title="title" />
       <p>
@@ -13,7 +12,10 @@
     </div>
 
     <div v-else>
-      načítám...
+      <Header title="Načítám..." />
+      <p>
+        <img src="../assets/images/loading.gif" alt="Načítám..." class="mx-auto w-12">
+      </p>
     </div>
   </div>
 </template>
@@ -28,7 +30,7 @@ export default {
   computed: {
     ...mapState(['ballot']),
     title() {
-      return `Hlasování "${this.ballot.item.name}"`; 
+      return `Probíhá „${this.ballot.item.name}“.`; 
     }
   },
   data() {
@@ -36,11 +38,12 @@ export default {
       loading: true,
     }
   },
-  mounted() {
+  async mounted() {
     if (!this.ballot.item.id) {
-      this.$store
+      await this.$store
         .dispatch('ballot/fetch', this.$route.params.id);
-    } 
+
+    }
 
     this.loading = false;
   }

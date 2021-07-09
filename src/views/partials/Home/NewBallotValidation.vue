@@ -25,19 +25,19 @@
 				<div class="my-5">
 
 					<div class="scroll">
-						<div class="grid grid-cols-2">
+						<div class="grid grid-cols-1 md:grid-cols-2 mb-2">
 							<div class="text-left italic">Název hlasování:</div>
-							<div class="text-right font-bold break-words">{{ data.ballotName }}</div>
+							<div class="text-left md:text-right font-bold break-words">{{ data.ballotName }}</div>
 						</div>
-						<div class="grid grid-cols-2 mb-2">
+						<div class="grid grid-cols-1 md:grid-cols-2 mb-2">
 							<div class="text-left italic">Váš email:</div>
-							<div class="text-right font-bold break-words">{{ data.ballotAdminEmail }}</div>
+							<div class="text-left md:text-right font-bold break-words">{{ data.ballotAdminEmail }}</div>
 						</div>
-						<div class="grid grid-cols-2 mb-4">
+						<div class="grid grid-cols-1 md:grid-cols-2 mb-4">
 							<div class="text-left italic">Možnosti:</div>
-							<div class="text-right">
+							<div class="text-left md:text-right">
 								<span v-for="option in Object.entries(data.ballotOptions)" :key="option[0]" class="font-bold">
-									{{ option[1] }}<br>
+									<span class="text-gray-300 md:hidden">-</span> {{ option[1] }}<br>
 								</span>
 							</div>
 						</div>

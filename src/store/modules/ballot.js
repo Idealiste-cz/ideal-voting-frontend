@@ -1,5 +1,6 @@
 import axios from "axios";
 import { url } from "../../../api.config";
+import router from '../../router/index';
 
 export default {
     namespaced: true,
@@ -15,6 +16,9 @@ export default {
     mutations: {
         SET_STATE_ITEM (state, data) {
             state.item = data;
+        },
+        SET_STATE_ITEM_ERROR (state, data) {
+            state.item.error = data;
         }
     },
     actions: {
@@ -39,8 +43,8 @@ export default {
                 .then(response => {
                     commit('SET_STATE_ITEM', response.data);
                 })
-                .catch(err => {
-                    console.log(err);
+                .catch(() => {
+                    router.push({ name: 'Home' });
                 });
         }
     },
