@@ -2,13 +2,16 @@
   <div>
     <div v-if="!loading">
       <Header :title="title" />
-      <p>
-        {{ballot.item.name}}<br>
-        {{ballot.item.options}}<br>
-        {{ballot.item.voters}}<br>
-        {{ballot.item.email}}<br>
-        {{ballot.item.id}}
-      </p>
+      
+      <div class="px-4">
+        <p>
+          {{ballot.item.name}}<br>
+          {{ballot.item.options}}<br>
+          {{ballot.item.voters}}<br>
+          {{ballot.item.email}}<br>
+          {{ballot.item.id}}
+        </p>
+      </div>
     </div>
 
     <div v-else>
@@ -30,7 +33,7 @@ export default {
   computed: {
     ...mapState(['ballot']),
     title() {
-      return `Probíhá „${this.ballot.item.name}“.`; 
+      return this.ballot.item.name; 
     }
   },
   data() {
@@ -42,7 +45,6 @@ export default {
     if (!this.ballot.item.id) {
       await this.$store
         .dispatch('ballot/fetch', this.$route.params.id);
-
     }
 
     this.loading = false;

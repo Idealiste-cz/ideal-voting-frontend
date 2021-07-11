@@ -1,6 +1,6 @@
 <template>
   <footer class="text-center mt-20 pb-6">
-    <hr class="mb-6 border-gray-300"/>
+    <hr class="mb-6 border-gray-300 shadow-sm"/>
     
     <p class="mb-4">
       <router-link :to="{ name: 'About' }" class="hover:underline">Jak to funguje?</router-link> &nbsp;|&nbsp;

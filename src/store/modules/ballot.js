@@ -33,8 +33,8 @@ export default {
                 .then(response => {
                     commit('SET_STATE_ITEM', response.data);
                 })
-                .catch(err => {
-                    console.log(err);
+                .catch(() => {
+                    router.push({ name: 'RequestFailed' });
                 });
         },
         fetch({ commit }, id) {

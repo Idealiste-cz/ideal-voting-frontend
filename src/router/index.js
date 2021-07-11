@@ -4,6 +4,7 @@ import Ballot from '@/views/Ballot.vue';
 import About from '@/views/static/About.vue';
 import Contact from '@/views/static/Contact.vue';
 import NotFound from '@/views/static/Error/NotFound.vue';
+import RequestFailed from '@/views/static/Error/RequestFailed.vue';
 
 const routes = [
     {
@@ -25,6 +26,11 @@ const routes = [
         path: '/contact',
         name: "Contact",
         component: Contact
+    },
+    {
+        path: '/request-failed',
+        name: "RequestFailed",
+        component: RequestFailed
     },
     {
         path: '/:pathMatch(.*)*',

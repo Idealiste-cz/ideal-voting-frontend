@@ -36,8 +36,8 @@
 						<div class="grid grid-cols-1 md:grid-cols-2 mb-4">
 							<div class="text-left italic">Možnosti:</div>
 							<div class="text-left md:text-right">
-								<span v-for="option in Object.entries(data.ballotOptions)" :key="option[0]" class="font-bold">
-									<span class="text-gray-300 md:hidden">-</span> {{ option[1] }}<br>
+								<span v-for="option in data.ballotOptions" :key="option" class="font-bold">
+									<span class="text-gray-300 md:hidden">-</span> {{ option }}<br>
 								</span>
 							</div>
 						</div>
@@ -91,6 +91,16 @@ export default {
         closeModal() {
             return this.$parent.$data.showModal = false;
         },
+		disableSubmitButton() {
+			const buttons = document.querySelectorAll("#submit-form");
+			
+			for (const btn of buttons) {
+				setTimeout(() => {
+					btn.disabled = true;
+					btn.innerHTML = "Zpracovávám...";
+				}, 100);
+			}
+		},
 		processVoters() {
 			let voters = [];
 			document.querySelectorAll("[data-voters]").forEach(item => {
@@ -98,14 +108,6 @@ export default {
 			});
 
 			return voters;
-		},
-		processOptions() {
-			let options = [];
-            Object.entries(this.data.ballotOptions).forEach(item => {
-                options.push(item[1]);
-            });
-
-			return options;
 		},
 		validateVoterEmailOnFly(id) {
 			let inputData = document.querySelector("[data-voters='"+id+"']");
@@ -124,10 +126,12 @@ export default {
 			el.remove();
 		},
 		async setData() {
+			this.disableSubmitButton();
+
 			let data = {
 				email: this.data.ballotAdminEmail,
 				name: this.data.ballotName,
-				options: this.processOptions(),
+				options: this.data.ballotOptions,
 				voters: this.processVoters()
 			};
 

@@ -3,7 +3,7 @@
         <router-link :to="{ name: 'Home' }">
             <h1 class="text-4xl text-center mt-12 text-white" id="main-header">Tajná volba</h1>
         </router-link>
-        <h4 class="text-white text-center" id="main-subheader">{{title}}</h4>
+        <h4 class="text-white text-center text-xl" id="main-subheader">{{title}}</h4>
     </div>
 </template>
 

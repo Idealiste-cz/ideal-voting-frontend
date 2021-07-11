@@ -67,9 +67,10 @@
                     id="ballotVotersInput"
                     rows="10"
                     class="focus:outline-none border rounded border-gray-400 rounded bg-transparent w-3/4"
+                    required
                 ></textarea>
                 <p class="text-sm italic pl-12 pr-12">
-                    *Nezapomeňte zadat i svůj, pokud patříte mezi hlasující.
+                    *Nezapomeňte zadat i svůj, pokud patříte mezi hlasující. Emaily oddělujte čárkou.
                 </p>
             </div>
         </div>
@@ -100,7 +101,7 @@ export default {
           ballotOptionInput: null,
           ballotOptions: [],
           ballotVotersInput: null,
-          invalidEmail: false
+          invalidEmail: false,
       }
     },
     methods: {
@@ -110,22 +111,33 @@ export default {
                 : false;
         },
         pushToOptions() {
-            let index = Math.random();
-            this.ballotOptions[index] = this.ballotOptionInput;
+            // let index = Math.random();
+            this.ballotOptions.push(this.ballotOptionInput);
             return this.ballotOptionInput = null;
         },
         removeFromOptions(item) {
             return delete this.ballotOptions[item];
         },
         processUserInput() {
-            let userData = {
-                ballotName: this.ballotName,
-                ballotAdminEmail: this.ballotAdminEmail,
-                ballotOptions: this.ballotOptions,
-                ballotVotersInput: this.ballotVotersInput
-            };
-
-            this.$emit("processUserInput", userData);
+            console.log(this.ballotName);
+            console.log(this.ballotAdminEmail);
+            console.log(this.ballotOptions[0]);
+            console.log(this.ballotVotersInput);
+            if (
+                this.ballotName !== null
+                && this.ballotAdminEmail !== null
+                && this.ballotOptions.length > 0
+                && this.ballotVotersInput !== null
+            ) {
+                let userData = {
+                    ballotName: this.ballotName,
+                    ballotAdminEmail: this.ballotAdminEmail,
+                    ballotOptions: this.ballotOptions,
+                    ballotVotersInput: this.ballotVotersInput
+                };
+    
+                this.$emit("processUserInput", userData);
+            }
         },
           
     },
