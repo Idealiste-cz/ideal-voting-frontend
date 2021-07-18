@@ -2,26 +2,26 @@
     <div @keydown.esc="showModal = false">
         <Header :title="title" />
         <div>
-            <NewBallot @processUserInput="processData"/>
+            <NewElection @processUserInput="processData"/>
         </div>
         
         <div v-if="showModal !== false">
-            <NewBallotValidation :data="userData"/>
+            <NewElectionValidation :data="userData"/>
         </div>
     </div>
 </template>
 
 <script>
-import NewBallot from './partials/Home/NewBallot';
-import NewBallotValidation from './partials/Home/NewBallotValidation';
+import NewElection from './partials/Home/NewElection';
+import NewElectionValidation from './partials/Home/NewElectionValidation';
 import Header from './partials/Header.vue';
 import { parseEmails } from '../helpers/emails';
 
 export default {
   name: 'Home',
   components: {
-      NewBallot,
-      NewBallotValidation,
+      NewElection,
+      NewElectionValidation,
       Header
   },
   data() {
@@ -33,7 +33,7 @@ export default {
   },
   methods: {
       async processData(data) {
-          data.ballotVoters = await parseEmails(data.ballotVotersInput);
+          data.voters = await parseEmails(data.votersInput);
           return this.showModal = true, this.userData = data;
       }
   },

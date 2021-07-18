@@ -3,13 +3,13 @@
       <form @keydown.enter.prevent="" @submit.prevent="">
         <div class="text-lg text-center mb-6" id="form-name">
             <div class="mb-2">
-                <label for="ballotName">Název hlasování</label>
+                <label for="title">Název hlasování</label>
             </div>
             <div>
                 <input 
                     type="text"
-                    v-model="ballotName"
-                    id="ballotName"
+                    v-model="title"
+                    id="title"
                     class="focus:outline-none border border-gray-400 rounded bg-transparent w-3/4" required>
             </div>
         </div>
@@ -21,7 +21,7 @@
                 <input 
                     id="ballotAdminEmail"
                     type="email"
-                    v-model="ballotAdminEmail"
+                    v-model="admin"
                     @input="checkEmailValidity"
                     class="focus:outline-none border border-gray-400 rounded bg-transparent w-3/4"
                     :class="{ 'border-red-700' : invalidEmail }"
@@ -32,27 +32,27 @@
 
         <div class="text-lg text-center mb-6" id="form-options">
             <div class="mb-2">
-                <label for="ballotOptionInput">Možnosti volby</label>
+                <label for="optionInput">Možnosti volby</label>
             </div>
             <div>
                     <input 
                         type="text"
-                        v-model="ballotOptionInput"
-                        id="ballotOptionInput"
+                        v-model="optionInput"
+                        id="optionInput"
                         class="focus:outline-none -ml-4 border rounded border-gray-400 rounded bg-transparent w-3/4"
                         @keyup.enter="pushToOptions"
                     >
                     <button @click.prevent="pushToOptions" class="-ml-20 text-gray-500 hover:text-green-600">Přidat</button> ⤶
             </div>
-            <div v-if="Object.keys(ballotOptions).length > 0" class="mt-4">
+            <div v-if="Object.keys(options).length > 0" class="mt-4">
                 <button 
-                    v-for="bo in Object.entries(ballotOptions)" 
-                    :key="bo[0]" 
+                    v-for="option in Object.entries(options)" 
+                    :key="option[0]" 
                     class="focus:outline-none green-gradient p-2 m-1 rounded shadow-sm"
                     @click.prevent
                 >
-                    <span class="font-bold pointer-events-none">{{ bo[1] }}</span>
-                    <span @click="removeFromOptions(bo[0])" class="ml-2 inline-block align-middle hover:text-red-600">×</span>
+                    <span class="font-bold pointer-events-none">{{ option[1].title }}</span>
+                    <span @click="removeFromOptions(option[0])" class="ml-2 inline-block align-middle hover:text-red-600">×</span>
                 </button>
             </div>
         </div>
@@ -63,8 +63,8 @@
             </div>
             <div>
                 <textarea
-                    v-model="ballotVotersInput"
-                    id="ballotVotersInput"
+                    v-model="votersInput"
+                    id="votersInput"
                     rows="10"
                     class="focus:outline-none border rounded border-gray-400 rounded bg-transparent w-3/4"
                     required
@@ -96,44 +96,44 @@ export default {
     emits: ['processUserInput'],
     data() {
       return {
-          ballotName: null,
-          ballotAdminEmail: null,
-          ballotOptionInput: null,
-          ballotOptions: [],
-          ballotVotersInput: null,
+          title: null,
+          admin: null,
+          optionInput: null,
+          options: [],
+          votersInput: null,
           invalidEmail: false,
       }
     },
     methods: {
         checkEmailValidity() {
-            this.invalidEmail = (regexPlainEmail(this.ballotAdminEmail) === false)
+            this.invalidEmail = (regexPlainEmail(this.admin) === false)
                 ? true
                 : false;
         },
         pushToOptions() {
-            // let index = Math.random();
-            this.ballotOptions.push(this.ballotOptionInput);
-            return this.ballotOptionInput = null;
+            const option = {
+                title: this.optionInput,
+                description: null
+            }
+
+            this.options.push(option);
+            return this.optionInput = null;
         },
         removeFromOptions(item) {
-            return delete this.ballotOptions[item];
+            return this.options.splice(item, 1);
         },
         processUserInput() {
-            console.log(this.ballotName);
-            console.log(this.ballotAdminEmail);
-            console.log(this.ballotOptions[0]);
-            console.log(this.ballotVotersInput);
             if (
-                this.ballotName !== null
-                && this.ballotAdminEmail !== null
-                && this.ballotOptions.length > 0
-                && this.ballotVotersInput !== null
+                this.title !== null
+                && this.admin !== null
+                && this.options.length > 0
+                && this.votersInput !== null
             ) {
                 let userData = {
-                    ballotName: this.ballotName,
-                    ballotAdminEmail: this.ballotAdminEmail,
-                    ballotOptions: this.ballotOptions,
-                    ballotVotersInput: this.ballotVotersInput
+                    title: this.title,
+                    admin: this.admin,
+                    options: this.options,
+                    votersInput: this.votersInput
                 };
     
                 this.$emit("processUserInput", userData);

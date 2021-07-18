@@ -5,11 +5,11 @@
       
       <div class="px-4">
         <p>
-          {{ballot.item.name}}<br>
-          {{ballot.item.options}}<br>
-          {{ballot.item.voters}}<br>
-          {{ballot.item.email}}<br>
-          {{ballot.item.id}}
+          {{admin.item.title}}<br>
+          {{admin.item.options}}<br>
+          {{admin.item.voters}}<br>
+          {{admin.item.admin}}<br>
+          {{admin.item.token}}
         </p>
       </div>
     </div>
@@ -17,7 +17,7 @@
     <div v-else>
       <Header title="Načítám..." />
       <p>
-        <img src="../assets/images/loading.gif" alt="Načítám..." class="mx-auto w-12">
+        <img src="../../assets/images/loading.gif" alt="Načítám..." class="mx-auto w-12">
       </p>
     </div>
   </div>
@@ -25,15 +25,15 @@
 
 <script>
 import { mapState } from 'vuex';
-import Header from './partials/Header.vue';
+import Header from '../partials/Header.vue';
 
 export default {
-  name: 'Ballot',
+  name: 'Election',
   components: { Header },
   computed: {
-    ...mapState(['ballot']),
+    ...mapState(['admin']),
     title() {
-      return this.ballot.item.name; 
+      return this.admin.item.title; 
     }
   },
   data() {
@@ -42,9 +42,9 @@ export default {
     }
   },
   async mounted() {
-    if (!this.ballot.item.id) {
+    if (!this.admin.item.token) {
       await this.$store
-        .dispatch('ballot/fetch', this.$route.params.id);
+        .dispatch('admin/fetch', { slug: this.$route.params.slug, token: this.$route.params.token });
     }
 
     this.loading = false;

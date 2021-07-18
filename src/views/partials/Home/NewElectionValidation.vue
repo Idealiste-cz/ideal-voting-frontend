@@ -27,17 +27,17 @@
 					<div class="scroll">
 						<div class="grid grid-cols-1 md:grid-cols-2 mb-2">
 							<div class="text-left italic">Název hlasování:</div>
-							<div class="text-left md:text-right font-bold break-words">{{ data.ballotName }}</div>
+							<div class="text-left md:text-right font-bold break-words">{{ data.title }}</div>
 						</div>
 						<div class="grid grid-cols-1 md:grid-cols-2 mb-2">
 							<div class="text-left italic">Váš email:</div>
-							<div class="text-left md:text-right font-bold break-words">{{ data.ballotAdminEmail }}</div>
+							<div class="text-left md:text-right font-bold break-words">{{ data.admin }}</div>
 						</div>
 						<div class="grid grid-cols-1 md:grid-cols-2 mb-4">
 							<div class="text-left italic">Možnosti:</div>
 							<div class="text-left md:text-right">
-								<span v-for="option in data.ballotOptions" :key="option" class="font-bold">
-									<span class="text-gray-300 md:hidden">-</span> {{ option }}<br>
+								<span v-for="option in Object.entries(data.options)" :key="option[0]" class="font-bold">
+									<span class="text-gray-300 md:hidden">-</span> {{ option[1].title }}<br>
 								</span>
 							</div>
 						</div>
@@ -46,7 +46,7 @@
 							<div class="text-left italic">Hlasující:</div>
 							<div class="text-right"></div>
 						</div>
-						<div v-for="voter in data.ballotVoters" :key="voter.email" class="mb-4 text-left">
+						<div v-for="voter in data.voters" :key="voter.email" class="mb-4 text-left">
 							<div :id="voter.id">
 								<button @click.prevent="removeVoter(voter.id)" class="text-red-400 hover:text-red-600">×</button>
 								<input 
@@ -82,10 +82,10 @@ import { mapState } from 'vuex';
 import { regexPlainEmail } from '@/helpers/regex';
 
 export default {
-    name: "NewBallotValidation",
+    name: "NewElectionValidation",
     props: ['data'],
 	computed: {
-		...mapState(['ballot']),
+		...mapState(['admin']),
 	},
     methods: {
         closeModal() {
@@ -129,20 +129,23 @@ export default {
 			this.disableSubmitButton();
 
 			let data = {
-				email: this.data.ballotAdminEmail,
-				name: this.data.ballotName,
-				options: this.data.ballotOptions,
+				admin: this.data.admin,
+				title: this.data.title,
+				options: this.data.options,
 				voters: this.processVoters()
 			};
 
-			await this.$store.dispatch('ballot/new', data);
-			const id = this.$store.state.ballot.item.id;
-			this.$router.push({ name: 'Ballot', params: { id }});
+			await this.$store.dispatch('admin/new', data);
+
+			
+			// this.$router.push({ name: 'Election', params: { title, id }});
 		}
     },
 	mounted() {
-		let tween = gsap.to(".border-red-700", {x: 10, duration: 1.00, ease: 'elastic'});
-		tween.play();
+		if (document.querySelectorAll(".border-red-700").length > 0) {
+			let tween = gsap.to(".border-red-700", {x: 10, duration: 1.00, ease: 'elastic'});
+			tween.play();
+		}
 	}
 }
 </script>

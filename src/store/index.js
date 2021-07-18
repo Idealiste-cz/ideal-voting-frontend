@@ -1,9 +1,9 @@
 import { createStore } from 'vuex'
-import ballot from './modules/ballot'
+import admin from './modules/admin'
 
 // Create a new store instance.
 export default createStore({
   modules: {
-      ballot
+      admin
   }
 });
