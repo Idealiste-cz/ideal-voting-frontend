@@ -4,13 +4,33 @@
       <Header :title="title" />
       
       <div class="px-4">
-        <p>
-          {{admin.item.title}}<br>
-          {{admin.item.options}}<br>
-          {{admin.item.voters}}<br>
-          {{admin.item.admin}}<br>
-          {{admin.item.token}}
-        </p>
+        <div class="grid grid-cols-2">
+          <div>
+            <div class="mb-12">
+              <h3 class="text-center text-xl">Možnosti volby</h3>
+              <ul>
+                <li v-for="option in Object.entries(admin.item.options)" :key="option[0]">
+                  {{ option[1].title }}
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-center text-xl">Administrace volby</h3>
+              <p>
+                Email adminstrátora: {{admin.item.admin}}
+              </p>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-center text-xl">Hlasující</h3>
+            <ul>
+              <li v-for="voter in admin.item.voters" :key="voter">
+                {{ voter.voted }}
+                {{ voter.voter.address }}
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -42,10 +62,8 @@ export default {
     }
   },
   async mounted() {
-    if (!this.admin.item.token) {
-      await this.$store
-        .dispatch('admin/fetch', { slug: this.$route.params.slug, token: this.$route.params.token });
-    }
+    await this.$store
+      .dispatch('admin/fetch', { slug: this.$route.params.slug, token: this.$route.params.token });
 
     this.loading = false;
   }

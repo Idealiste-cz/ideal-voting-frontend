@@ -36,7 +36,7 @@ h1 {
     text-transform: uppercase;
 }
 
-p, label, h3 {
+p, label, h3, li {
     color: var(--text-gray);
 }
 
