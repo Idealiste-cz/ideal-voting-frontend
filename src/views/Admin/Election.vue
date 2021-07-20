@@ -9,22 +9,19 @@
             <div class="mb-12">
               <h3 class="text-xl pb-4">Možnosti volby</h3>
               <ul class="list-disc list-inside">
-                <li v-for="option in Object.entries(admin.item.options)" :key="option[0]">
+                <li v-for="option in Object.entries(admin.election.options)" :key="option[0]">
                   {{ option[1].title }}
                 </li>
               </ul>
             </div>
             <div class="mb-12">
-              <h3 class="text-xl pb-4">Administrace volby</h3>
-              <p>
-                Email administrátora: {{admin.item.admin}}
-              </p>
+              <button id="close-election" class="rounded shadow-lg font-bold p-4 mt-4">Ukončit hlasování</button>
             </div>
           </div>
           <div>
             <h3 class="text-xl pb-4">Hlasující</h3>
             <ul>
-              <li v-for="voter in admin.item.voters" :key="voter">
+              <li v-for="voter in admin.election.voters" :key="voter">
                 <span v-if="voter.voted === false" class="text-gray-400 pr-4 text-lg">
                   ⦾
                 </span>
@@ -59,7 +56,7 @@ export default {
   computed: {
     ...mapState(['admin']),
     title() {
-      return this.admin.item.title; 
+      return this.admin.election.title; 
     }
   },
   data() {
@@ -74,8 +71,8 @@ export default {
     this.loading = false;
 
     setInterval(() => {
-      this.$store.dispatch('admin/fetch', { slug: this.admin.item.slug, token: this.admin.item.token });
-    }, 1000);
+      this.$store.dispatch('admin/fetch', { slug: this.admin.election.slug, token: this.admin.election.token });
+    }, 5000);
   }
 }
 </script>

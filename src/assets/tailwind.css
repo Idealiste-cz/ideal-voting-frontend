@@ -69,3 +69,12 @@ p, label, h3, li {
 #submit-form:hover {
     background: linear-gradient(to right, var(--dark-green), var(--light-green));
 }
+
+#close-election {
+    background: linear-gradient(to right, var(--dark-red), var(--light-red));
+    color: white;
+}
+
+#close-election:hover {
+    background: var(--dark-red);
+}

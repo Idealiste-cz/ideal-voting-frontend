@@ -136,9 +136,6 @@ export default {
 			};
 
 			await this.$store.dispatch('admin/new', data);
-
-			
-			// this.$router.push({ name: 'Election', params: { title, id }});
 		}
     },
 	mounted() {

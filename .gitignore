@@ -24,3 +24,6 @@ pnpm-debug.log*
 
 #json-server
 db.json
+
+#test.emails
+test.emails

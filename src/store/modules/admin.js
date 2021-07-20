@@ -5,7 +5,7 @@ import router from '../../router/index';
 export default {
     namespaced: true,
     state: {
-        item: {
+        election: {
             title: null,
             admin: null,
             options: [],
@@ -15,11 +15,8 @@ export default {
         }
     },
     mutations: {
-        SET_STATE_ITEM (state, data) {
-            state.item = data;
-        },
-        SET_STATE_ITEM_ERROR (state, data) {
-            state.item.error = data;
+        SET_STATE (state, data) {
+            state.election = data;
         }
     },
     actions: {
@@ -30,7 +27,7 @@ export default {
                     const slug = response.data.links[0].parameters.titleMangled;
                     const token = response.data.links[0].parameters.token;
 
-                    commit('SET_STATE_ITEM', {
+                    commit('SET_STATE', {
                         ...payload,
                         slug,
                         token,
@@ -49,7 +46,7 @@ export default {
                     const slug = response.data.titleMangled;
                     const token = response.data.adminToken;
 
-                    commit('SET_STATE_ITEM', {
+                    commit('SET_STATE', {
                         title: response.data.title,
                         admin: response.data.admin.address,
                         options: response.data.options,
@@ -59,13 +56,13 @@ export default {
                     });
                 })
                 .catch(() => {
-                    router.push({ name: 'Home' });
+                    router.push({ name: 'RequestFailed' });
                 });
         }
     },
     getters: {
-        fetchItem(state) {
-            return state.item;
+        fetch(state) {
+            return state.election;
         }
     }
 };
