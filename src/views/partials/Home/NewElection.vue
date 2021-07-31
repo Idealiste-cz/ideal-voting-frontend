@@ -35,14 +35,14 @@
                 <label for="optionInput">Možnosti volby</label>
             </div>
             <div>
-                    <input 
-                        type="text"
-                        v-model="optionInput"
-                        id="optionInput"
-                        class="focus:outline-none -ml-4 border rounded border-gray-400 rounded bg-transparent w-3/4"
-                        @keyup.enter="pushToOptions"
-                    >
-                    <button @click.prevent="pushToOptions" class="-ml-20 text-gray-500 hover:text-green-600">Přidat</button> ⤶
+                <input 
+                    type="text"
+                    v-model="optionInput"
+                    id="optionInput"
+                    class="focus:outline-none -ml-4 border rounded border-gray-400 rounded bg-transparent w-3/4"
+                    @keyup.enter="pushToOptions"
+                >
+                <button @click.prevent="pushToOptions" class="-ml-20 text-gray-500 hover:text-green-600">Přidat</button> ⤶
             </div>
             <div v-if="Object.keys(options).length > 0" class="mt-4">
                 <button 
